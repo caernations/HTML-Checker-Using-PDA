@@ -1,3 +1,5 @@
+from os import system
+
 def parseHTML(file_path):
     parsedHTML = []
     
@@ -23,7 +25,16 @@ def parseHTML(file_path):
     return parsedHTML
 
 
-file_path = input("Input file path: ")
-result = parseHTML(file_path)
-for r in result:
-    print(r)
+while True:
+    try:
+        file_path = input("Input file path: ")
+        result = parseHTML(file_path)
+        for r in result:
+            print(r)
+        break 
+    except FileNotFoundError:
+        print("File not found. Please try again.") 
+        system('pause')
+        system('cls')
+    except Exception as e:
+        print(f"An error occurred: {e}")  
