@@ -10,19 +10,31 @@ def parseHTML():
 
             for line_number, line in enumerate(lines, 1):
                 tag = ''
-                in_tag = False  
+                in_tag = False
+                in_comment = False
 
                 for char in line:
-                    if char == '<':  
-                        in_tag = True
-                        tag += '<' 
-                    elif char == '>':  
+                    if char == '<': 
+                        tag += '<'
+                        if not in_comment:
+                            in_tag = True
+                    elif char == '>': 
                         tag += '>'
-                        parsedHTML.append((line_number, tag))
-                        tag = '' 
-                        in_tag = False
-                    elif in_tag: 
-                        tag += char
+                        if in_tag:
+                            if tag.startswith('<!--'):
+                                in_comment = True
+                                in_tag = False
+                                tag = '<!---->'
+                            elif in_comment and tag.endswith('-->'):
+                                in_comment = False
+                            else:
+                                in_tag = False
+                            parsedHTML.append((line_number, tag))
+                            tag = ''
+                    elif in_tag or in_comment:
+                        if not in_comment:
+                            tag += char
+
         return parsedHTML
     
     except FileNotFoundError:
