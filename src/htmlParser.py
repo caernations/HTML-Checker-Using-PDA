@@ -4,13 +4,23 @@ def parseHTML():
     parsedHTML = []
     file_directory = "../test/"
 
+    def process_tag(tag):
+        parts = tag.split()
+        tag_name = parts[0]
+        attributes = []
+
+        for part in parts[1:]:
+            attr = part.split('=')[0]
+            if '=' in part and attr not in ['method', 'action', 'type']:
+                attributes.append(f'{attr}=""')
+            else:
+                attributes.append(part)
+
+        attr_str = ' '.join(attributes).rstrip('>')
+        return (tag_name, attr_str if attr_str else None, '>' if attr_str else None)
+
     while True:
-        print("""
-        
-█▀▀ █░█ █▀▀ █▀▀ █▄▀   █░█ ▀█▀ █▀▄▀█ █░░
-█▄▄ █▀█ ██▄ █▄▄ █░█   █▀█ ░█░ █░▀░█ █▄▄
-            
-            """)
+        print("HTML Parser Tool")
         file_name = input("Input file name: ")
         file_path = file_directory + file_name
 
@@ -22,8 +32,6 @@ def parseHTML():
                     tag = ''
                     in_tag = False
                     in_comment = False
-                    in_attribute_value = False
-                    quote_char = ''
 
                     for char in line:
                         if char == '<':
@@ -34,56 +42,26 @@ def parseHTML():
                             if in_tag:
                                 if tag.startswith('<!--'):
                                     in_comment = True
-                                    parsedHTML.append((line_number, '<!---->')) 
-                                    tag = ''
+                                    parsedHTML.append((line_number, '<!---->'))
                                 elif in_comment and tag.endswith('-->'):
                                     in_comment = False
                                     parsedHTML.append((line_number, '<!---->'))
-                                    tag = ''
                                 else:
                                     in_tag = False
-                                    tag = remove_attribute_contents(tag)
-                                    parsedHTML.append((line_number, tag))
+                                    tag_name, attrs, closing = process_tag(tag)
+                                    parsedHTML.append((line_number, tag_name))
+                                    if attrs:  
+                                        parsedHTML.append((line_number, attrs))
+                                    if closing is not None: 
+                                        parsedHTML.append((line_number, closing))
                                     tag = ''
                         elif in_tag:
-                            if char in ('"', "'"):
-                                if not in_attribute_value:
-                                    in_attribute_value = True
-                                    quote_char = char
-                                    tag += char 
-                                elif char == quote_char: 
-                                    in_attribute_value = False
-                                    tag += char 
-                            elif not in_attribute_value or char == quote_char:
-                                tag += char  
+                            tag += char
 
             return parsedHTML
 
         except FileNotFoundError:
             print("File not found. Please try again.")
-            system('cls')
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            system('cls')
-
-def remove_attribute_contents(tag):
-    new_tag = ''
-    in_quotes = False
-    skip = False
-    for char in tag:
-        if char in ('"', "'") and not in_quotes:
-            in_quotes = True
-            new_tag += char
-        elif char in ('"', "'") and in_quotes:
-            in_quotes = False
-            new_tag += char
-        elif not in_quotes or skip:
-            new_tag += char
-        elif in_quotes:
-            skip = True  
-        elif char == '=':
-            new_tag += char
-            skip = False  
-            
-    return new_tag.strip()
