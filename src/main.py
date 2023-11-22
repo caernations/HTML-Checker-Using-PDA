@@ -41,31 +41,16 @@ while True:
     system('cls')
 
     if (chooseMenu == '1') or (chooseMenu == 'CHECK HTML'):
-        try:
-            print("""
-
-█▀▀ █░█ █▀▀ █▀▀ █▄▀   █░█ ▀█▀ █▀▄▀█ █░░
-█▄▄ █▀█ ██▄ █▄▄ █░█   █▀█ ░█░ █░▀░█ █▄▄
-                  
-                  """)
-            result = htmlParser.parseHTML()
+        result = htmlParser.parseHTML()
+        if result:
+            for r in result:
+                print(r)
             print("""
 ░ Result:
 ░ >> ACCEPTED                
-""")
-            if result:
-                for r in result:
-                    print(r)
-            print()
-            break 
-        except FileNotFoundError:
-            print("File not found. Please try again.") 
-            system('pause')
-            system('cls')
-        except Exception as e:
-            print(f"An error occurred: {e}") 
-            print(f"Chosen Menu: {chooseMenu}")
-            system('pause')
+        """)
+        print()
+        break 
 
     elif (chooseMenu == '2') or (chooseMenu == 'HELP'):
         while True:
@@ -75,7 +60,7 @@ while True:
 █▀█ █▄█ ▀▄▀▄▀   ░█░ █▄█   █▄█ ▄█ ██▄
 
 ░ 1. 
-░ 2. 
+░ 2.
 ░ 3. 
                   
 ░ Type 'back' to return to the main menu.
