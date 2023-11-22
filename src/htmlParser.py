@@ -46,8 +46,3 @@ def parseHTML():
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
-
-result = parseHTML()
-if result:
-    for r in result:
-        print(r)
