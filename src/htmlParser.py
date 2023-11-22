@@ -23,33 +23,39 @@ def parseHTML():
                     in_tag = False
                     in_comment = False
                     in_attribute_value = False
+                    quote_char = ''
 
                     for char in line:
                         if char == '<':
                             tag += '<'
-                            if not in_comment:
-                                in_tag = True
+                            in_tag = True
                         elif char == '>':
                             tag += '>'
                             if in_tag:
                                 if tag.startswith('<!--'):
                                     in_comment = True
-                                    in_tag = False
-                                    tag = '<!---->'
+                                    parsedHTML.append((line_number, '<!---->')) 
+                                    tag = ''
                                 elif in_comment and tag.endswith('-->'):
                                     in_comment = False
+                                    parsedHTML.append((line_number, '<!---->'))
+                                    tag = ''
                                 else:
                                     in_tag = False
                                     tag = remove_attribute_contents(tag)
                                     parsedHTML.append((line_number, tag))
-                                tag = ''
-                        elif in_tag or in_comment:
-                            if not in_comment:
-                                if char == '"' and in_tag:
-                                    in_attribute_value = not in_attribute_value
-                                    tag += char
-                                elif not in_attribute_value:
-                                    tag += char
+                                    tag = ''
+                        elif in_tag:
+                            if char in ('"', "'"):
+                                if not in_attribute_value:
+                                    in_attribute_value = True
+                                    quote_char = char
+                                    tag += char 
+                                elif char == quote_char: 
+                                    in_attribute_value = False
+                                    tag += char 
+                            elif not in_attribute_value or char == quote_char:
+                                tag += char  
 
             return parsedHTML
 
@@ -59,18 +65,25 @@ def parseHTML():
 
         except Exception as e:
             print(f"An error occurred: {e}")
-            return None
+            system('cls')
 
 def remove_attribute_contents(tag):
     new_tag = ''
     in_quotes = False
+    skip = False
     for char in tag:
-        if char == '"' and not in_quotes:
+        if char in ('"', "'") and not in_quotes:
             in_quotes = True
             new_tag += char
-        elif char == '"' and in_quotes:
+        elif char in ('"', "'") and in_quotes:
             in_quotes = False
             new_tag += char
-        elif not in_quotes:
+        elif not in_quotes or skip:
             new_tag += char
-    return new_tag
+        elif in_quotes:
+            skip = True  
+        elif char == '=':
+            new_tag += char
+            skip = False  
+            
+    return new_tag.strip()
