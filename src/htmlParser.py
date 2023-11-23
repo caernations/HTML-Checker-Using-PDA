@@ -4,7 +4,11 @@ def parseHTML():
 
     def process_tag(tag, line_number):
         if tag.startswith('<!--'):
-            parsedHTML.append((line_number, '<!---->'))
+            end_comment_index = tag.find('-->')
+            if end_comment_index != -1:
+                parsedHTML.append((line_number, '<!---->'))
+            else:
+                parsedHTML.append((line_number, 'INVALID COMMENT'))
             return
 
         if tag.startswith('</'):
