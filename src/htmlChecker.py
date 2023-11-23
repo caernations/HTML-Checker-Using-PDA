@@ -2,16 +2,11 @@ from os import system
 from collections import Counter
 from htmlParser import parseHTML
 
-def transition(state, word, stacks, skip):
-    with open("src\pda.txt", 'r') as file:
-        lines = file.readlines()
-
+def transition(lines, state, word, stacks):
         for line_number, line in enumerate(lines, 1):
-            if line_number < 10 + skip: continue
+            if line_number < 10: continue
             else:
-                elements = line.split()
-                print(elements)
-
+                elements = line
                 if elements[0] == state and elements[1] == word:
                     print("TEST 1")
                     if elements[2] != 'e':
@@ -27,19 +22,19 @@ def transition(state, word, stacks, skip):
                     stacks.append(word)
                     print("TEST 3")
                     return stacks, False
-    return stacks, state
+        return stacks, state
 
 def checkHTML():
     results = parseHTML()
-    with open("src\pda.txt", 'r') as file:
-        lines = file.readlines()
+    with open("pda.txt", 'r') as file:
+        lines = [line.split() for line in file.readlines()]
         symbol = lines[1]
         state = lines[3][0]
+        lines = lines[9:]
         stacks = []
-        skip = 0
 
     for i in range(len(results)):
-        stacks, state = transition(state, results[i][1], stacks, skip)
+        stacks, state = transition(lines, state, results[i][1], stacks)
         print("Stacks:", stacks, "State:", state)
         if state == False:
             print(stacks)
