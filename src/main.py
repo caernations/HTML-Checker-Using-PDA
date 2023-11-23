@@ -3,6 +3,7 @@ import htmlParser
 import sys
 import pda
 while True:
+    system('cls')
     print("""
               
 ═════════════════════════════════════════
