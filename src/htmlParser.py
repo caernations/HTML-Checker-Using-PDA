@@ -1,6 +1,6 @@
-def parseHTML():
+def parseHTML(filename):
     parsedHTML = []
-    file_directory = "../test/"
+    file_path = "../test/" + filename
 
     def process_tag(tag, line_number):
         if tag.startswith('<!--'):
@@ -34,14 +34,9 @@ def parseHTML():
 
         parsedHTML.append((line_number, '>'))
 
-    print("HTML Parser Tool")
-    file_name = input("Input file name: ")
-    file_path = file_directory + file_name
-
     try:
         with open(file_path, 'r') as file:
             lines = file.readlines()
-
             line_number = 1
             tag = ''
             in_tag = False
