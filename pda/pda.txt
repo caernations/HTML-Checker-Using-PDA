@@ -1,5 +1,5 @@
 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21
-> </html> <!----> </head> </title> </body> </link> </h1> </h2> </h3> </h4> </h5> </h6> </p> </strong> </script> </br> </em> </b> </abbr> </small> </hr> </div> </a> </img> </button> </form> </input> </table> </tr> </td> </th> <html <head <title <body <link <h1 <h2 <h3 <h4 <h5 <h6 <p <strong <script <br <em <b <abbr <small <hr <div <a <img <button <form <input <table <tr <td <th < style="" class="" id="" href="" rel="" src="" alt="" type="" action="" method="GET" method="POST" type="text" type="password" type="email" type="number" type="checkbox" type="submit" type="reset" type="button"
+> </html> <!----> </head> </title> </body> </link> </h1> </h2> </h3> </h4> </h5> </h6> </p> </strong> </script> </br> </em> </b> </abbr> </small> </hr> </div> </a> </img> </button> </form> </input> </table> </tr> </td> </th> <html <head <title <body <link <h1 <h2 <h3 <h4 <h5 <h6 <p <strong <script <br <em <b <abbr <small <hr <div <a <img <button <form <input <table <tr <td <th < style="" class="" id="" href="" rel="" src="" alt="" type="" action="" method="get" method="post" type="text" type="password" type="email" type="number" type="checkbox" type="submit" type="reset" type="button"
 html head title script body p h1 h2 h3 h4 h5 h6 em b abbr form button a div small strong table br img link
 Q1
 
@@ -64,6 +64,7 @@ Q8 </div> div Q8 epsilon
 Q8 </small> small Q8 epsilon
 Q8 </strong> strong Q8 epsilon
 Q8 <!----> epsilon Q8 epsilon
+Q8 </script> script Q8 epsilon
 Q8 <table epsilon Q9 table
 Q9 style="" epsilon Q9 epsilon
 Q9 class="" epsilon Q9 epsilon
@@ -104,8 +105,8 @@ Q11 href="" link Q11 link
 Q11 src="" script Q11 script
 Q11 type="" script Q11 script
 Q11 action="" form Q11 form
-Q11 method="GET" form Q11 form
-Q11 method="POST" form Q11 form
+Q11 method="get" form Q11 form
+Q11 method="post" form Q11 form
 Q11 type="text" input Q11 input
 Q11 type="password" input Q11 input
 Q11 type="email" input Q11 input
@@ -116,7 +117,7 @@ Q11 type="reset" button Q11 button
 Q11 type="button" button Q11 button
 Q11 > input Q10 epsilon
 Q11 > epsilon Q10 epsilon
-Q10 </p> p Q10 p
+Q10 </p> p Q10 epsilon
 Q10 </h1> h1 Q10 epsilon
 Q10 </h2> h2 Q10 epsilon
 Q10 </h3> h3 Q10 epsilon
@@ -136,6 +137,8 @@ Q10 </table> table Q8 epsilon
 Q10 </tr> tr Q10 epsilon
 Q10 </td> td Q10 epsilon
 Q10 </th> th Q10 epsilon
+Q10 <!----> epsilon Q10 epsilon 
+Q10 </script> script Q10 epsilon
 Q10 </table> table Q8 epsilon
 Q8 <p epsilon Q14 p
 Q8 <h1 epsilon Q14 h1
@@ -156,6 +159,7 @@ Q8 <hr epsilon Q14 epsilon
 Q8 <button epsilon Q14 button
 Q8 <form epsilon Q14 form
 Q8 <input epsilon Q14 input
+Q8 <script epsilon Q14 script
 Q8 <link epsilon Q12 epsilon
 Q8 <img epsilon Q15 epsilon
 Q15 class="" epsilon Q15 epsilon
@@ -186,8 +190,8 @@ Q14 href="" link Q14 link
 Q14 src="" script Q14 script
 Q14 type="" script Q14 script
 Q14 action="" form Q14 form
-Q14 method="GET" form Q14 form
-Q14 method="POST" form Q14 form
+Q14 method="get" form Q14 form
+Q14 method="post" form Q14 form
 Q14 type="text" input Q14 input
 Q14 type="password" input Q14 input
 Q14 type="email" input Q14 input
