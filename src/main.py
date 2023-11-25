@@ -39,11 +39,12 @@ while True:
     chooseMenu = str(input("░ Choose: ")).upper()
     system('pause')
     system('cls')
-
     if (chooseMenu == '1') or (chooseMenu == 'CHECK HTML'):
         print("HTML Parser")
         html_file_name = input("Input HTML filename (.html): ")
         html_input = htmlParser.parseHTML(html_file_name)
+        print("HTML Input:")
+        print(html_input)
         print("PDA Reader")
         pda_file_name = input("Input PDA filename (.txt): ")
         html_pda = pda.HTMLCheckerPDA()

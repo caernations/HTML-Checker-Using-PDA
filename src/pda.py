@@ -128,17 +128,30 @@ class HTMLCheckerPDA:
                     return stacks, False
         return stacks, state
     def transition(self, input_symbol):
+        print("state sekarang:", self.current_state)
         for transition in self.transition_functions:
             if self.current_state == transition[0]:
-                if input_symbol == transition[1] and self.current_stack_top == transition[2]:
-                    self.push_to_stack(transition[4])
+                # print("input symbol html: ", input_symbol)
+                # print("input symbol transisi: ", transition[1])
+                # print("stack top html: ", self.current_stack_top())
+                # print("stack top transisi: ", transition[2])
+                if input_symbol == transition[1] and transition[2] == "epsilon":
+                    if(transition[4] != "epsilon"):
+                        self.push_to_stack(transition[4])
+                    self.current_state = transition[3]
+                    return True
+                elif input_symbol == transition[1] and self.current_stack_top() == transition[2]:
+                    if(transition[4] != "epsilon"):
+                        self.push_to_stack(transition[4])
+                    self.pop_from_stack()
                     self.current_state = transition[3]
                     return True # sending true if there is a transition function with the input_symbol
         return False # sending false if there is no transition function for the input_symbol
 
     def check_correctness(self, html_input_symbols):
         for symbol in html_input_symbols:
-            print(symbol)
+            print("symbol", symbol)
+            print("stack", self.stack)
             if not (symbol[1] in self.alphabet):
                 return symbol[0]
             else:
