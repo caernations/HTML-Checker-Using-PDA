@@ -50,11 +50,16 @@ while True:
             print("HTML Parser")
             html_file_name = input("Input HTML file name: " )
             html_input = htmlParser.parseHTML(html_file_name)
+            for r in html_input:
+                print(r)
+            print()
             print("PDA Reader")
             pda_file_name = input("Input PDA file name: ")
             html_pda = pda.HTMLCheckerPDA()
             html_pda.setPDA(*pda.txtPDAExtractor(pda_file_name))
             result = html_pda.check_correctness(html_input)
+
+
 
             if result == -1:
                 print("""
