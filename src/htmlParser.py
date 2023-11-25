@@ -2,6 +2,7 @@ def parseHTML(filename):
     parsedHTML = []
     file_directory = "../test/"
     file_path = file_directory + filename
+
     def process_tag(tag, line_number):
         if tag.startswith('<!--'):
             end_comment_index = tag.find('-->')
@@ -10,6 +11,10 @@ def parseHTML(filename):
             else:
                 parsedHTML.append((line_number, 'INVALID COMMENT'))
             return 
+
+        # if tag.startswith != ('<html>'):
+            parsedHTML.append((line_number, 'INVALID STRING'))
+            return
 
         if tag.startswith('</'):
             tag = tag.replace('\n', '').replace(' ', '').replace('\t', '')
@@ -23,7 +28,7 @@ def parseHTML(filename):
             tag_name = (tag[1:space_index]).strip()
             attrs = tag[space_index + 1:close_index]
             parsedHTML.append((line_number, (f'<{(tag_name.strip(" ")).lower()}')))
-            for attr in attrs.split():
+            for attr in attrs.split("\" "):
                 attr_name, equal, attr_value = attr.partition('=')
                 if attr_name.lower() in ['method', 'type'] and equal:
                     parsedHTML.append((line_number, f'{(attr_name).lower()}={(attr_value).lower()}'))
