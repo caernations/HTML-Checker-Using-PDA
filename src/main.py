@@ -1,7 +1,7 @@
 from os import system
 import htmlParser
 import sys
-
+import pda
 
 while True:
     print("""
@@ -47,14 +47,25 @@ while True:
 █▄▄ █▀█ ██▄ █▄▄ █░█   █▀█ ░█░ █░▀░█ █▄▄
                   
                   """)
-            result = htmlParser.parseHTML()
-            print("""
+            print("HTML Parser")
+            html_file_name = input("Input HTML file name: " )
+            html_input = htmlParser.parseHTML(html_file_name)
+            print("PDA Reader")
+            pda_file_name = input("Input PDA file name: ")
+            html_pda = pda.HTMLCheckerPDA()
+            html_pda.setPDA(*pda.txtPDAExtractor(pda_file_name))
+            result = html_pda.check_correctness(html_input)
+
+            if result == -1:
+                print("""
 ░ Result:
-░ >> ACCEPTED                
-""")
-            if result:
-                for r in result:
-                    print(r)
+░ >> HTML IS VALID                
+            """)
+            else:
+                print(f"""
+░ Result:
+░ >> HTML IS INVALID (error at line: {result})                
+                """)
             print()
             break 
         except FileNotFoundError:

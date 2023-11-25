@@ -1,7 +1,7 @@
-def parseHTML():
+def parseHTML(filename):
     parsedHTML = []
     file_directory = "../test/"
-
+    file_path = file_directory + filename
     def process_tag(tag, line_number):
         if tag.startswith('<!--'):
             end_comment_index = tag.find('-->')
@@ -9,7 +9,7 @@ def parseHTML():
                 parsedHTML.append((line_number, '<!---->'))
             else:
                 parsedHTML.append((line_number, 'INVALID COMMENT'))
-            return
+            return 
 
         if tag.startswith('</'):
             tag = tag.replace('\n', '').replace(' ', '').replace('\t', '')
@@ -37,10 +37,6 @@ def parseHTML():
 
         parsedHTML.append((line_number, '>'))
 
-
-    file_name = input("Input file name: ")
-    file_path = file_directory + file_name
-
     try:
         with open(file_path, 'r') as file:
             lines = file.readlines()
@@ -61,7 +57,6 @@ def parseHTML():
                         in_tag = False
                     elif in_tag:
                         tag += char
-
         return parsedHTML
 
     except FileNotFoundError:
