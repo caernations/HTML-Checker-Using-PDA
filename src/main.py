@@ -6,7 +6,6 @@ import pda
 while True:
     system('cls')
     print("""
-              
 ═════════════════════════════════════════
               
 █░█ ▀█▀ █▀▄▀█ █░░
@@ -29,8 +28,10 @@ while True:
         
         
     print("""
+          
 █▀▄▀█ █▀▀ █▄░█ █░█ ▀
 █░▀░█ ██▄ █░▀█ █▄█ ▄
+═════════════════════
               
 ░ 1. Check HTML
 ░ 2. Help
@@ -46,26 +47,29 @@ while True:
 
 █▀▀ █░█ █▀▀ █▀▀ █▄▀   █░█ ▀█▀ █▀▄▀█ █░░
 █▄▄ █▀█ ██▄ █▄▄ █░█   █▀█ ░█░ █░▀░█ █▄▄
-                    
+════════════════════════════════════════
                     """)
-                print("HTML Parser")
-                html_file_name = input("Input HTML file name: " )
+                html_file_name = input("Input HTML file name:\n>> " )
                 html_input = htmlParser.parseHTML(html_file_name)
                 # print(html_input)
-                print("PDA Reader")
-                pda_file_name = input("Input PDA file name: ")
+                pda_file_name = input("\nInput PDA file name:\n>> ")
                 html_pda = pda.HTMLCheckerPDA()
                 html_pda.setPDA(*pda.txtPDAExtractor(pda_file_name))
                 result = html_pda.check_correctness(html_input)
+                print("""
+                      
+
+█▀█ █▀▀ █▀ █░█ █░░ ▀█▀
+█▀▄ ██▄ ▄█ █▄█ █▄▄ ░█░
+═══════════════════════""")
                 if result == -1:
                     print("""
-░ Result:
 ░ >> HTML IS VALID                
                 """)
                 else:
                     print(f"""
-░ Result:
-░ >> HTML IS INVALID (error at line: {result})                
+░ >> HTML IS INVALID)                
+░ >> Error at line: {result}                
                     """)
                 print()
                 choice = input("Do you want to check another HTML file? (Y/N): ")
@@ -88,6 +92,7 @@ while True:
                     
 █░█ █▀█ █░█░█   ▀█▀ █▀█   █░█ █▀ █▀▀
 █▀█ █▄█ ▀▄▀▄▀   ░█░ █▄█   █▄█ ▄█ ██▄
+
                       
 ░ 1. Enter a valid HTML file name which is located in the 'test' folder.
 ░ 2. Enter a valid PDA file name which is located in the 'pda' folder.
@@ -97,13 +102,14 @@ while True:
     """)
                 chooseHelp = str(input("░ ")).upper()
                 print(chooseHelp)
-                if chooseHelp == 'BACK':
+                if chooseHelp == 'BACK' or chooseHelp == '4':
                     system('cls')
                     break
                 else:
                     print("Invalid.")
                     system('cls')
     elif (chooseMenu == '3') or (chooseMenu == 'EXIT'):
+        print("\n")
         sys.exit()
     else:
         print("Invalid.")
