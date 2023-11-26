@@ -4,6 +4,7 @@ import sys
 import pda
 
 while True:
+    system('cls')
     print("""
               
 ═════════════════════════════════════════
@@ -37,62 +38,62 @@ while True:
           
 """)
     chooseMenu = str(input("░ Choose: ")).upper()
-    system('pause')
-    system('cls')
     if (chooseMenu == '1') or (chooseMenu == 'CHECK HTML'):
-        try:
-            print("""
+        while True:
+            system('cls')
+            try:
+                print("""
 
 █▀▀ █░█ █▀▀ █▀▀ █▄▀   █░█ ▀█▀ █▀▄▀█ █░░
 █▄▄ █▀█ ██▄ █▄▄ █░█   █▀█ ░█░ █░▀░█ █▄▄
-                  
-                  """)
-            print("HTML Parser")
-            html_file_name = input("Input HTML file name: " )
-            html_input = htmlParser.parseHTML(html_file_name)
-            for r in html_input:
-                print(r)
-            print()
-            print("PDA Reader")
-            pda_file_name = input("Input PDA file name: ")
-            html_pda = pda.HTMLCheckerPDA()
-            html_pda.setPDA(*pda.txtPDAExtractor(pda_file_name))
-            result = html_pda.check_correctness(html_input)
-
-
-
-            if result == -1:
-                print("""
+                    
+                    """)
+                print("HTML Parser")
+                html_file_name = input("Input HTML file name: " )
+                html_input = htmlParser.parseHTML(html_file_name)
+                # print(html_input)
+                print("PDA Reader")
+                pda_file_name = input("Input PDA file name: ")
+                html_pda = pda.HTMLCheckerPDA()
+                html_pda.setPDA(*pda.txtPDAExtractor(pda_file_name))
+                result = html_pda.check_correctness(html_input)
+                if result == -1:
+                    print("""
 ░ Result:
 ░ >> HTML IS VALID                
-            """)
-            else:
-                print(f"""
+                """)
+                else:
+                    print(f"""
 ░ Result:
 ░ >> HTML IS INVALID (error at line: {result})                
-                """)
-            print()
-            break 
-        except FileNotFoundError:
-            print("File not found. Please try again.") 
-            system('pause')
-            system('cls')
-        except Exception as e:
-            print(f"An error occurred: {e}") 
-            print(f"Chosen Menu: {chooseMenu}")
-            system('pause')
+                    """)
+                print()
+                choice = input("Do you want to check another HTML file? (Y/N): ")
+                if(choice.lower() == 'n'):
+                    break
+                continue 
+            except FileNotFoundError:
+                print("File not found. Please try again.") 
+                system('pause')
+                continue
+            except Exception as e:
+                print(f"An error occurred: {e}") 
+                print(f"Chosen Menu: {chooseMenu}")
+                continue
 
     elif (chooseMenu == '2') or (chooseMenu == 'HELP'):
+            system('cls')
             while True:
                 print("""
                     
-    █░█ █▀█ █░█░█   ▀█▀ █▀█   █░█ █▀ █▀▀
-    █▀█ █▄█ ▀▄▀▄▀   ░█░ █▄█   █▄█ ▄█ ██▄
-    ░ 1. 
-    ░ 2.
-    ░ 3. 
-                    
-    ░ Type 'back' to return to the main menu.
+█░█ █▀█ █░█░█   ▀█▀ █▀█   █░█ █▀ █▀▀
+█▀█ █▄█ ▀▄▀▄▀   ░█░ █▄█   █▄█ ▄█ ██▄
+                      
+░ 1. Enter a valid HTML file name which is located in the 'test' folder.
+░ 2. Enter a valid PDA file name which is located in the 'pda' folder.
+░ 3. Wait for the result.
+░ 4. Type 'back' to return to the main menu.
+                      
     """)
                 chooseHelp = str(input("░ ")).upper()
                 print(chooseHelp)
@@ -103,7 +104,6 @@ while True:
                     print("Invalid.")
                     system('cls')
     elif (chooseMenu == '3') or (chooseMenu == 'EXIT'):
-        system('cls')
         sys.exit()
     else:
         print("Invalid.")
