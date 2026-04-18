@@ -7,21 +7,17 @@ def isTokenExist(array,token):
             return True
     return False
 
-def parseHTML(filename):
+def parseHTMLContent(content):
     parsedHTML = []
-    file_directory = "../test/"
-    file_path = file_directory + filename
 
     def process_tag(tag, line_number):
-        
-
         if tag.startswith('<!--'):
             end_comment_index = tag.find('-->')
             if end_comment_index != -1:
                 parsedHTML.append((line_number, '<!---->'))
             else:
                 parsedHTML.append((line_number, 'INVALID COMMENT'))
-            return 
+            return
 
         if tag.startswith('</'):
             tag = tag.replace('\n', '').replace(' ', '').replace('\t', '')
@@ -41,9 +37,9 @@ def parseHTML(filename):
                 attr_name, equal, attr_value = attr.partition('=')
                 if attr_name.lower() in ['method', 'type'] and equal:
                     parsedHTML.append((line_number, f'{(attr_name).lower()}={(attr_value).lower()}'))
-                elif not equal and attr_name: 
+                elif not equal and attr_name:
                     parsedHTML.append((line_number, f'{(attr_name).lower()}'))
-                else:  
+                else:
                     parsedHTML.append((line_number, f'{(attr_name).lower()}=""'))
         else:
             tag_name = tag[1:close_index]
@@ -51,36 +47,36 @@ def parseHTML(filename):
 
         parsedHTML.append((line_number, '>'))
 
-    try:
-        with open(file_path, 'r') as file:
-            lines = file.readlines()
-            line_number = 1
+    line_number = 1
+    tag = ''
+    in_tag = False
+    for char in content:
+        if char == '\n':
+            line_number += 1
+        elif char == '<':
+            in_tag = True
+            tag = '<'
+        elif char == '>' and in_tag:
+            tag += '>'
+            process_tag(tag, line_number)
             tag = ''
             in_tag = False
-            for line in lines:
-                for char in line:
-                    if char == '\n':
-                        line_number += 1
-                    elif char == '<':
-                        in_tag = True
-                        tag = '<'
-                    elif char == '>' and in_tag:
-                        tag += '>'
-                        process_tag(tag, line_number)
-                        tag = ''
-                        in_tag = False
-                    elif in_tag:
-                        tag += char
-                    else:
-                        if not isTokenExist(parsedHTML, '<html')  or isTokenExist(parsedHTML, '</html>'):
-                            parsedHTML.append((line_number, 'INVALID STRING'))
-               
+        elif in_tag:
+            tag += char
+        else:
+            if not isTokenExist(parsedHTML, '<html') or isTokenExist(parsedHTML, '</html>'):
+                parsedHTML.append((line_number, 'INVALID STRING'))
+
+    return parsedHTML
 
 
-        return parsedHTML
-
+def parseHTML(filename):
+    file_directory = "../test/"
+    file_path = file_directory + filename
+    try:
+        with open(file_path, 'r') as file:
+            return parseHTMLContent(file.read())
     except FileNotFoundError:
         print("File not found. Please try again.")
-
     except Exception as e:
         print(f"An error occurred: {e}")

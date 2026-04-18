@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Checker · PDA</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="scanlines"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">&lt;/&gt;</span>
+      <div>
+        <h1>HTML Checker</h1>
+        <p class="subtitle">Pushdown Automaton · validates HTML structure</p>
+      </div>
+    </div>
+    <div class="status" id="status">
+      <span class="dot"></span><span class="label">idle</span>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <div class="card-head">
+        <h2>Input</h2>
+        <div class="controls">
+          <label class="picker">
+            <span>Sample</span>
+            <select id="samplePicker">
+              <option value="">— blank —</option>
+            </select>
+          </label>
+          <label class="picker">
+            <span>PDA</span>
+            <select id="pdaPicker"></select>
+          </label>
+        </div>
+      </div>
+
+      <div class="editor-wrap">
+        <div class="gutter" id="gutter">1</div>
+        <textarea id="editor" spellcheck="false" placeholder="Paste or type HTML here…"></textarea>
+      </div>
+
+      <div class="actions">
+        <button id="checkBtn" class="primary">▶ Check HTML</button>
+        <button id="clearBtn" class="ghost">Clear</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Result</h2>
+        <div id="summary" class="summary pending">awaiting input</div>
+      </div>
+
+      <div class="panels">
+        <div class="panel">
+          <h3>Verdict</h3>
+          <div id="verdict" class="verdict">
+            <div class="verdict-icon">◎</div>
+            <div class="verdict-text">Run the checker to see results.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>PDA state</h3>
+          <div class="kv">
+            <div><span>final state</span><code id="finalState">—</code></div>
+            <div><span>stack</span><code id="stackOut">—</code></div>
+          </div>
+        </div>
+
+        <div class="panel tokens-panel">
+          <h3>Tokens <small id="tokenCount"></small></h3>
+          <div id="tokens" class="tokens"><em class="muted">no tokens yet</em></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>IF3130 · Automata · PDA HTML Validator</span>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
